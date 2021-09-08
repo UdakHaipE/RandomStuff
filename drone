@@ -1,0 +1,35 @@
+$deliverySpots = array (
+        array ("Salacgrīva",57.748145, 24.357966), //nedaudz parveidoju ta lai pasam vieglak
+        array ("Jūrmala",56.959952, 23.786628),
+        array ("Baldone",56.731635, 24.372040),
+        array ("Valmiera",57.532045, 25.408193),
+        array ("Bauska",56.409343, 24.190341),
+        array ("Cēsis",57.310207, 25.281462),
+        array ("Aknīste",56.162377, 25.743645),
+        array ("Saldus",56.660755, 22.487410),
+        array ("Sigulda",57.142200, 24.851048),	 
+);
+$base = [57.30907365,25.267977300000002];
+$a = 0;
+$count = count($deliverySpots);
+
+function distance($lat1, $lon1, $lat2, $lon2) { //funkcija kas izrekina attalumu
+  if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+    return 0;
+  }
+  else {
+    $theta = $lon1 - $lon2;
+    $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+    $dist = acos($dist);
+    $dist = rad2deg($dist);
+    $miles = $dist * 60 * 1.1515; //Pārveido uz KM
+    $Kilom = $miles * 1.609344; //Pārveido uz KM
+
+    return ($Kilom); //atgriež kilometrus
+  }
+}
+for ($row = 0; $row < $count; $row++){
+
+    echo "Base -> ".$deliverySpots [$a][0]." ". distance($base[0], $base[1], $deliverySpots[$a][1], $deliverySpots[$a][2]) . " KM \n " .$distance[1];
+    $a = $a + 1;
+}
