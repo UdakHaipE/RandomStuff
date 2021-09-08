@@ -1,0 +1,33 @@
+<?php
+
+$pantins = ['akmens','skeres','papirits,','viens','divi','tris'];
+
+
+foreach($pantins as $word){
+
+    for ($i = 0;$i < strlen($word); $i++){
+        echo $word[$i];
+        usleep(80000);
+    }
+    echo "\n";
+}
+
+echo "\n";
+usleep(300000);
+echo "Rādi tagad!!! \n";
+sleep(1);
+echo"\n";
+$computer = rand(0, 2);
+echo "Es saku: " .strtoupper($pantins[$computer]);
+
+sleep(1);
+
+$text = " \n Kā tevi sauc? \n";
+for ($i = 0;$i < strlen($text); $i++){
+        echo $text[$i];
+        usleep(80000);
+}
+
+$name = ucfirst(fgets(STDIN));
+
+echo "$name, esi sveiks!";
