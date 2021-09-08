@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CandyShop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Body stils */
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* Galvene */
+.header {
+  padding: 80px;
+  text-align: center;
+  background: #108080;
+  color: rgb(0, 0, 0);
+}
+
+
+.header h1 {
+  font-size: 40px;
+}
+
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+
+.navbar a {
+  float: left;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+
+.navbar a.right {
+  float: right;
+}
+
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+
+.row {  
+  display: -ms-flexbox; 
+  display: flex;
+  -ms-flex-wrap: wrap; 
+  flex-wrap: wrap;
+}
+
+
+.side {
+  -ms-flex: 20%; 
+  flex: 20%;
+  background-color: #f1f1f1;
+  padding: 20px;
+}
+
+
+.main {   
+  -ms-flex: 70%; 
+  flex: 70%;
+  background-color: white;
+  padding: 20px;
+}
+
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+}
+table, th, td {
+  border: 1px solid black;
+}
+
+</style>
+</head>
+<body>
+  
+
+<div class="header">
+  <h1>Saldumu veikals</h1>
+  <p>Šajā mājas lapā vari aplūkot un iegādāties visāda veida saldumus, droši cienājies
+  </p>
+</div>
+
+<div class="navbar">
+  <a href="index.html">Home</a>
+  <a href="#">Lokācija</a>
+  <a href="#">Iesniegt klūdu</a>
+  <a href="Grozs.html" class="right">Grozs</a>
+</div>
+
+<div class="row">
+  <div class="side">
+    <h2>Par mani</h2>
+    <img src = "https://cdn.discordapp.com/attachments/770965462733422613/838912062365106256/unknown.png"style="width:300px;height:200px;">
+    <p>Sveiki, mani sauc Ulvis.</p>
+    <h3>Text</h3>
+    <p>Esmu saldumu mīlis, tāpēc vēlos lai tu iztestē manus mīļākos saldumus</p>
+    <div class="fakeimg" style="height:60px;">Gotiņa</div><br>
+    <div class="fakeimg" style="height:60px;">Ledenes</div><br>
+    <div class="fakeimg" style="height:60px;">Vāverīte</div>
+
+        <li>Šokolādes</li>
+        <li>Batotiņi
+        <ol style="list-style-type: lower-alpha; padding-bottom: 0;">
+         <li style="margin-left:2em">Vāverīte</li>
+         <li style="margin-left:2em; padding-bottom: 0;">Twix</li>
+        </ol>
+        </li>
+        <li>Čupačupi</li>
+        <li>Ledenes</li>
+       </ol>
+       
+  </div>
+  
+  <div class="main">
+    <canvas id="canvas" width="200" height="200"
+style="background-color:rgb(255, 255, 255)">
+</canvas>
+
+<script>
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var radius = canvas.height / 2;
+ctx.translate(radius, radius);
+radius = radius * 0.70
+setInterval(drawClock, 1000);
+
+function drawClock() {
+  drawFace(ctx, radius);
+  drawNumbers(ctx, radius);
+  drawTime(ctx, radius);
+}
+
+function drawFace(ctx, radius) {
+  var grad;
+  ctx.beginPath();
+  ctx.arc(0, 0, radius, 0, 2*Math.PI);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+  grad = ctx.createRadialGradient(0,0,radius*0.85, 0,0,radius*0.95);
+  grad.addColorStop(0, '#333');
+  grad.addColorStop(0.5, 'white');
+  grad.addColorStop(1, '#333');
+  ctx.strokeStyle = grad;
+  ctx.lineWidth = radius*0.1;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+  ctx.fillStyle = '#333';
+  ctx.fill();
+}
+
+function drawNumbers(ctx, radius) {
+  var ang;
+  var num;
+  ctx.font = radius*0.15 + "px arial";
+  ctx.textBaseline="middle";
+  ctx.textAlign="center";
+  for(num = 1; num < 13; num++){
+    ang = num * Math.PI / 6;
+    ctx.rotate(ang);
+    ctx.translate(0, -radius*0.85);
+    ctx.rotate(-ang);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(ang);
+    ctx.translate(0, radius*0.85);
+    ctx.rotate(-ang);
+  }
+}
+
+function drawTime(ctx, radius){
+    var now = new Date();
+    var hour = now.getHours();
+    var minute = now.getMinutes();
+    var second = now.getSeconds();
+    //hour
+    hour=hour%12;
+    hour=(hour*Math.PI/6)+
+    (minute*Math.PI/(6*60))+
+    (second*Math.PI/(360*60));
+    drawHand(ctx, hour, radius*0.5, radius*0.07);
+    //minute
+    minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+    drawHand(ctx, minute, radius*0.8, radius*0.07);
+    // second
+    second=(second*Math.PI/30);
+    drawHand(ctx, second, radius*0.9, radius*0.02);
+}
+
+function drawHand(ctx, pos, length, width) {
+    ctx.beginPath();
+    ctx.lineWidth = width;
+    ctx.lineCap = "round";
+    ctx.moveTo(0,0);
+    ctx.rotate(pos);
+    ctx.lineTo(0, -length);
+    ctx.stroke();
+    ctx.rotate(-pos);
+}
+</script>
+    <h2>Saldumu izvēle</h2>
+    <h5>Ledene</h5>
+    <img src="https://cdn.discordapp.com/attachments/806475838492114984/839446990935818300/unknown.png" style="width:300px;height:300px;">
+    <p>Ļoti garšīga zelējama končiņa, ietektu pamēģināt</p>
+    <p>3,50$/kg</p>
+    <br>
+    <h2>Saldumu izvēle</h2>
+    <h5>Vāverīte</h5>
+    <img src="https://cdn.discordapp.com/attachments/806475838492114984/839446869901967370/Screenshot_65.png">
+    <p>3,00$/kg</p>
+    <p>Wooohoooo</p>
+  </div>
+</div>
+
+<div class="footer">
+  <h2> Kontakti</h2>
+  <h2><table id="customers">
+    <tr>
+      <th>Snap</th>
+      <th>IG</th>
+      <th>Tel. nr.</th>
+    </tr>
+    <tr>
+      <td><img src = "https://cdn.discordapp.com/attachments/806475838492114984/839489083684028447/unknown.png"></td>
+      <td>Ozolinsh_336</td>
+      <td>27037515</td>
+    </tr>
+</h2>
+</div>
+
+</body>
+</html>
