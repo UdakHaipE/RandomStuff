@@ -1,0 +1,49 @@
+<?php
+
+echo "Esi sveicināts, esmu gatavs jus apkalpot! \n";
+echo "Ko jus velaties konvertet! ja gradus spied 1, ja valutu spied 2! \n";
+
+$izv = fgets(STDIN);
+
+if($izv == 1){
+
+    echo "Lai konvertetu Celsius un Faranheits spiediet 1, Lai konvertetu Farannheits uz Celsius spiediet 2 \n";
+
+    $GVeid = fgets(STDIN);
+
+    echo "Ievadiet gradus \n";
+
+    $Grad = fgets(STDIN);
+
+    if($GVeid == 1){
+        $GIzv = ($Grad * 1.8000) + 32.00;
+        echo $GIzv ." Gradi pec Faranheita \n";
+    }elseif($GVeid == 2){
+        $GIzv = ($Grad - 32) / 1.8;
+        echo $GIzv ." Gradi pec Celsius \n";
+    }else{
+        echo " nesapratu jusu lugumu! \n";
+    }
+
+}elseif($izv == 2){
+
+    echo "Konvertet no euro uz usd spied 1, konvertet no usd uz euro spied 2! \n";
+
+    $nauda = fgets(STDIN);
+
+    echo "Ievadiet naudas summu! \n";
+
+    $Summa = fgets(STDIN);
+
+    if($nauda == 1){
+        $rez = $Summa * 1.09695;
+        echo $rez ." USD \n";   
+    }elseif($nauda ==2){
+        $rez = $Summa * 0.911541;
+        echo $rez ." EURO \n";
+    }else{
+        echo "nesapratu jusu lugumu! \n";
+    }   
+}else {
+    echo "nesapratu jusu lugumu! \n";
+}
